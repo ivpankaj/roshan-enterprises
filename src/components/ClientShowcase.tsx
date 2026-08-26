@@ -2,12 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { CLIENTS_LIST } from '@/lib/clientData';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
-
 import { WavyBackground } from './WavyBackground';
+import { CurvyLine } from './CurvyLine';
 
 export const ClientShowcase: React.FC = () => {
   return (
-    <section className="py-16 bg-slate-50/70 border-b border-slate-200 relative overflow-hidden">
+    <section className="py-16 bg-slate-50/70 relative overflow-hidden">
       {/* Golden Wavy Background behind cards */}
       <WavyBackground variant="gold-subtle" />
 
@@ -34,10 +34,10 @@ export const ClientShowcase: React.FC = () => {
             <Link
               key={client.slug}
               href={`/clients/${client.slug}`}
-              className="group bg-slate-50 border-2 border-slate-200 hover:border-gold-primary p-6 transition-all duration-300 shadow-md hover:shadow-2xl flex flex-col justify-between rounded-none relative overflow-hidden"
+              className="group bg-slate-50 border-2 border-slate-200 hover:border-gold-primary p-6 transition-all duration-300 shadow-md hover:shadow-2xl flex flex-col justify-between rounded-2xl relative overflow-hidden"
             >
               {/* Real Logo Image / SVG Render */}
-              <div className="pb-4 mb-2 border-b border-slate-200/80 flex items-center justify-center min-h-[72px]">
+              <div className="flex flex-col items-center justify-center min-h-[72px]">
                 {client.logoImg ? (
                   <img
                     src={client.logoImg}
@@ -50,6 +50,7 @@ export const ClientShowcase: React.FC = () => {
                     dangerouslySetInnerHTML={{ __html: client.logoSvg }}
                   />
                 )}
+                <CurvyLine variant="slate" strokeWidth={1} height={6} className="w-full mt-3 mb-1" />
               </div>
 
               {/* Scope Teaser & Action */}
@@ -68,6 +69,9 @@ export const ClientShowcase: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Bottom Curvy Border */}
+      <CurvyLine variant="slate" strokeWidth={2} height={12} className="absolute bottom-0 left-0 right-0 w-full z-20 pointer-events-none" />
     </section>
   );
 };

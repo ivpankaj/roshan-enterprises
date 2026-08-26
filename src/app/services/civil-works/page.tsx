@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { CTASection } from '@/components/CTASection';
 import { QuickQuoteModal } from '@/components/QuickQuoteModal';
 import { WavyBackground } from '@/components/WavyBackground';
+import { CurvyLine } from '@/components/CurvyLine';
 import { SERVICES_DATA } from '@/lib/data';
 import { Building2, CheckCircle2, ShieldCheck, ArrowRight } from 'lucide-react';
 
@@ -19,24 +20,22 @@ export default function CivilWorksServicePage() {
 
       <main className="flex-1 pt-28">
         {/* Detail Hero */}
-        <section className="bg-navy-dark text-white py-16 border-b border-gold-primary/30 relative overflow-hidden">
-          <WavyBackground variant="dark" />
+        <section className="bg-slate-50 text-navy-primary py-16 relative overflow-hidden border-b border-slate-200">
+          <WavyBackground variant="gold-subtle" />
           <div className="absolute inset-0 pattern-grid-subtle opacity-30 pointer-events-none"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
-            <span className="text-gold-bright text-xs font-bold uppercase tracking-widest bg-navy-primary px-3.5 py-1 rounded-full border border-gold-primary/30">
-              Structural & Finishing Engineering
-            </span>
-            <h1 className="text-4xl sm:text-6xl font-black text-white mt-3">
+            <h1 className="text-4xl sm:text-6xl font-black text-navy-primary mt-3">
               Civil Works & RCC Structural Contracting
             </h1>
-            <p className="text-slate-300 text-base sm:text-lg max-w-3xl mt-3 leading-relaxed">
+            <p className="text-slate-600 text-base sm:text-lg max-w-3xl mt-3 leading-relaxed">
               RCC structural frameworks, AAC block masonry, high-grade plastering, false ceilings, and custom civil modifications executed under strict engineering supervision.
             </p>
           </div>
+          <CurvyLine variant="gold" strokeWidth={2.5} height={12} className="absolute bottom-0 left-0 right-0 w-full z-20 pointer-events-none" />
         </section>
 
         {/* Detailed Breakdown */}
-        <section className="py-20 bg-slate-50 border-b border-slate-200 relative overflow-hidden">
+        <section className="py-20 bg-slate-50 relative overflow-hidden">
           <WavyBackground variant="gold-subtle" />
           <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -119,6 +118,7 @@ export default function CivilWorksServicePage() {
 
             </div>
           </div>
+          <CurvyLine variant="slate" strokeWidth={2} height={12} className="absolute bottom-0 left-0 right-0 w-full z-20 pointer-events-none" />
         </section>
 
         <CTASection onOpenQuoteModal={() => setQuoteModalOpen(true)} />

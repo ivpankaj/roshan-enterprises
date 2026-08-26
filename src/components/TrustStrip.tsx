@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Users, Clock, FileCheck, MapPin, ThumbsUp } from 'lucide-react';
+import { CurvyLine, WavyTransition } from './CurvyLine';
 
 export const TrustStrip: React.FC = () => {
   const trustItems = [
@@ -36,11 +37,14 @@ export const TrustStrip: React.FC = () => {
   ];
 
   return (
-    <section className="bg-navy-primary py-12 border-y border-gold-primary/40 relative z-20 shadow-2xl overflow-hidden">
+    <section className="bg-white py-12 relative z-20 shadow-sm overflow-hidden border-b border-slate-200">
+      {/* Top Curvy Border Line */}
+      <CurvyLine variant="gold" strokeWidth={2.5} height={12} className="absolute top-0 left-0 right-0 w-full z-20 pointer-events-none" />
+
       {/* Golden Wavy Curved Lines Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <svg
-          className="absolute inset-0 w-full h-full object-cover opacity-75"
+          className="absolute inset-0 w-full h-full object-cover opacity-25"
           preserveAspectRatio="none"
           viewBox="0 0 1440 220"
           fill="none"
@@ -48,18 +52,18 @@ export const TrustStrip: React.FC = () => {
         >
           <defs>
             <linearGradient id="gold-wave-primary" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#D99A16" stopOpacity="0.9" />
-              <stop offset="50%" stopColor="#F0B323" stopOpacity="1" />
-              <stop offset="100%" stopColor="#D99A16" stopOpacity="0.9" />
+              <stop offset="0%" stopColor="#D99A16" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#F0B323" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#D99A16" stopOpacity="0.6" />
             </linearGradient>
             <linearGradient id="gold-wave-fill" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#D99A16" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#F0B323" stopOpacity="0.05" />
+              <stop offset="0%" stopColor="#D99A16" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="#F0B323" stopOpacity="0.02" />
             </linearGradient>
             <linearGradient id="gold-wave-subtle" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F0B323" stopOpacity="0.4" />
-              <stop offset="50%" stopColor="#D99A16" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#F0B323" stopOpacity="0.4" />
+              <stop offset="0%" stopColor="#F0B323" stopOpacity="0.2" />
+              <stop offset="50%" stopColor="#D99A16" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#F0B323" stopOpacity="0.2" />
             </linearGradient>
           </defs>
 
@@ -85,19 +89,10 @@ export const TrustStrip: React.FC = () => {
             strokeDasharray="10 5"
             fill="none"
           />
-
-          {/* Soft Bottom Gold Accent Wave */}
-          <path
-            d="M0,180 C400,100 800,210 1440,120"
-            stroke="#D99A16"
-            strokeWidth="1.5"
-            strokeOpacity="0.5"
-            fill="none"
-          />
         </svg>
 
         {/* Ambient Golden Glow Orb */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[160px] bg-gold-primary/15 blur-3xl rounded-full"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[160px] bg-gold-primary/10 blur-3xl rounded-full"></div>
       </div>
 
       {/* Trust Cards Container */}
@@ -108,18 +103,20 @@ export const TrustStrip: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="group bg-navy-dark/90 hover:bg-navy-dark p-4 rounded-none border border-gold-primary/40 hover:border-gold-bright transition-all duration-300 shadow-2xl flex flex-col items-center text-center space-y-2 relative overflow-hidden"
+                className="group bg-slate-50 hover:bg-white p-4 rounded-2xl border-2 border-slate-200 hover:border-gold-primary transition-all duration-300 shadow-sm flex flex-col items-center text-center space-y-2 relative overflow-hidden"
               >
-                {/* Subtle Card Accent Line */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                {/* Subtle Card Curvy Accent Line */}
+                <div className="absolute top-0 left-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <CurvyLine variant="gold" strokeWidth={2} height={6} />
+                </div>
 
-                <div className="p-2.5 bg-navy-primary text-gold-bright rounded-none group-hover:scale-110 transition-transform border border-gold-primary/40 shadow-inner">
+                <div className="p-2.5 bg-navy-primary text-gold-bright rounded-xl group-hover:scale-110 transition-transform shadow-sm">
                   <Icon className="w-6 h-6 text-gold-primary" />
                 </div>
-                <h4 className="font-extrabold text-white text-sm sm:text-base leading-tight">
+                <h4 className="font-extrabold text-navy-primary text-sm sm:text-base leading-tight">
                   {item.title}
                 </h4>
-                <p className="text-slate-300 text-xs leading-snug">
+                <p className="text-slate-600 text-xs leading-snug">
                   {item.desc}
                 </p>
               </div>
@@ -127,6 +124,9 @@ export const TrustStrip: React.FC = () => {
           })}
         </div>
       </div>
+
+      {/* Bottom Wavy Transition (White to Slate-50) */}
+      <WavyTransition topColor="#FFFFFF" bottomColor="#F8FAFC" strokeColor="#D99A16" className="absolute bottom-0 left-0 right-0 w-full z-20 pointer-events-none" />
     </section>
   );
 };
