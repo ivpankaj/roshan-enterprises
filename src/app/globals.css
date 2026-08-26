@@ -75,3 +75,26 @@ body {
   background-image: radial-gradient(rgba(240, 179, 35, 0.1) 1px, transparent 1px);
   background-size: 24px 24px;
 }
+
+@keyframes floatLogo {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.04);
+  }
+}
+
+@keyframes logoGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(217, 154, 22, 0.4), 0 0 30px rgba(217, 154, 22, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(240, 179, 35, 0.8), 0 0 50px rgba(240, 179, 35, 0.4);
+  }
+}
+
+.animate-float-logo {
+  animation: floatLogo 3.5s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
+}
+
