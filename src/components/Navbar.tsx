@@ -9,13 +9,14 @@ import { COMPANY_INFO } from '@/lib/data';
 import { CurvyLine } from './CurvyLine';
 
 interface NavbarProps {
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [locationsDropdownOpen, setLocationsDropdownOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -30,23 +31,37 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About Us', href: '/about' },
-    {
-      name: 'Services',
-      href: '/services',
-      hasDropdown: true,
-      subItems: [
-        { name: 'All Services Overview', href: '/services' },
-        { name: 'Painting Services', href: '/services/painting' },
-        { name: 'Flooring Solutions', href: '/services/flooring' },
-        { name: 'Civil Works', href: '/services/civil-works' },
-      ]
-    },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Industries', href: '/industries' },
-    { name: 'Contact', href: '/contact' },
+  const handleQuoteClick = () => {
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal();
+    } else {
+      window.location.href = '/contact';
+    }
+  };
+
+  const serviceSubItems = [
+    { name: 'All Services Overview', href: '/services' },
+    { name: 'Painting Services Overview', href: '/services/painting' },
+    { name: '• Residential Painting', href: '/services/painting/residential-painting' },
+    { name: '• Commercial Painting', href: '/services/painting/commercial-painting' },
+    { name: '• Interior Painting', href: '/services/painting/interior-painting' },
+    { name: '• Exterior Painting', href: '/services/painting/exterior-painting' },
+    { name: 'Civil Work Overview', href: '/services/civil-work' },
+    { name: '• Residential Civil Work', href: '/services/civil-work/residential-civil-work' },
+    { name: '• Commercial Civil Work', href: '/services/civil-work/commercial-civil-work' },
+    { name: '• Civil Repair Work', href: '/services/civil-work/repair-work' },
+    { name: 'Flooring Solutions (VDF/Epoxy)', href: '/services/flooring' },
+  ];
+
+  const locationSubItems = [
+    { name: 'All Locations Overview', href: '/location' },
+    { name: 'Noida (Overview)', href: '/location/noida' },
+    { name: '• Painting Services Noida', href: '/painting-services/noida' },
+    { name: '• Civil Work Noida', href: '/civil-work/noida' },
+    { name: 'Greater Noida (Overview)', href: '/location/greater-noida' },
+    { name: '• Painting Services Greater Noida', href: '/painting-services/greater-noida' },
+    { name: '• Civil Work Greater Noida', href: '/civil-work/greater-noida' },
+    { name: 'Delhi NCR Region', href: '/location/delhi-ncr' },
   ];
 
   return (
@@ -57,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           <div className="flex items-center gap-4 text-[11px] sm:text-xs">
             <span className="flex items-center gap-1.5 text-gold-bright font-semibold">
               <MapPin className="w-3.5 h-3.5 text-gold-primary" />
-              {COMPANY_INFO.serviceArea}
+              Noida • Greater Noida • Delhi NCR
             </span>
             <span className="hidden md:inline text-slate-500">|</span>
             <span className="hidden md:inline italic text-slate-300">
@@ -75,16 +90,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
             </a>
           </div>
         </div>
-        {/* Curvy Line Under Top Bar */}
         <CurvyLine variant="white" strokeWidth={1} height={6} className="absolute bottom-0 left-0 right-0 w-full opacity-30 pointer-events-none" />
       </div>
 
-      {/* Main Navbar - Solid Pure White (Zero Gray Tint) */}
+      {/* Main Navbar */}
       <nav
         className={`w-full transition-all duration-300 relative bg-white ${
-          isScrolled
-            ? 'shadow-lg py-3'
-            : 'shadow-sm py-4'
+          isScrolled ? 'shadow-lg py-3' : 'shadow-sm py-4'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
@@ -93,70 +105,145 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+            <Link
+              href="/"
+              className={`px-3 py-2 text-sm font-semibold rounded-full transition-all ${
+                pathname === '/'
+                  ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
+                  : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
+              }`}
+            >
+              Home
+            </Link>
 
-              if (link.hasDropdown) {
-                return (
-                  <div
-                    key={link.name}
-                    className="relative"
-                    onMouseEnter={() => setServicesDropdownOpen(true)}
-                    onMouseLeave={() => setServicesDropdownOpen(false)}
-                  >
-                    <Link
-                      href={link.href}
-                      className={`px-4 py-2 text-sm font-semibold rounded-full flex items-center gap-1 transition-all ${
-                        isActive
-                          ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
-                          : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
-                      }`}
-                    >
-                      {link.name}
-                      <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${servicesDropdownOpen ? 'rotate-180 text-gold-primary' : ''}`} />
-                    </Link>
+            <Link
+              href="/about"
+              className={`px-3 py-2 text-sm font-semibold rounded-full transition-all ${
+                pathname === '/about'
+                  ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
+                  : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
+              }`}
+            >
+              About Us
+            </Link>
 
-                    {/* Dropdown Menu - Curvy Borders */}
-                    {servicesDropdownOpen && (
-                      <div className="absolute top-full left-0 w-64 pt-2 animate-fade-in z-50">
-                        <div className="bg-white border-2 border-gold-primary/30 shadow-2xl rounded-2xl p-3 space-y-1 relative">
-                          {link.subItems?.map((sub) => (
-                            <Link
-                              key={sub.href}
-                              href={sub.href}
-                              className="block px-4 py-2.5 text-xs font-semibold text-slate-700 hover:text-navy-dark hover:bg-gold-primary/20 rounded-xl transition-colors"
-                            >
-                              {sub.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+            {/* Services Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setServicesDropdownOpen(true)}
+              onMouseLeave={() => setServicesDropdownOpen(false)}
+            >
+              <Link
+                href="/services"
+                className={`px-3 py-2 text-sm font-semibold rounded-full flex items-center gap-1 transition-all ${
+                  pathname.startsWith('/services')
+                    ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
+                    : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
+                }`}
+              >
+                Services
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${servicesDropdownOpen ? 'rotate-180 text-gold-primary' : ''}`} />
+              </Link>
+
+              {servicesDropdownOpen && (
+                <div className="absolute top-full left-0 w-72 pt-2 animate-fade-in z-50">
+                  <div className="bg-white border-2 border-gold-primary/30 shadow-2xl rounded-2xl p-3 space-y-1 relative max-h-[80vh] overflow-y-auto">
+                    {serviceSubItems.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        className={`block px-3 py-2 text-xs font-semibold rounded-xl transition-colors ${
+                          sub.name.startsWith('•')
+                            ? 'text-slate-600 pl-5 hover:text-navy-dark hover:bg-slate-100'
+                            : 'text-navy-primary font-bold bg-slate-50 hover:bg-gold-primary/20 mt-1'
+                        }`}
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
                   </div>
-                );
-              }
+                </div>
+              )}
+            </div>
 
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`px-4 py-2 text-sm font-semibold rounded-full transition-all ${
-                    isActive
-                      ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
-                      : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
+            {/* Locations Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setLocationsDropdownOpen(true)}
+              onMouseLeave={() => setLocationsDropdownOpen(false)}
+            >
+              <Link
+                href="/location"
+                className={`px-3 py-2 text-sm font-semibold rounded-full flex items-center gap-1 transition-all ${
+                  pathname.startsWith('/location') || pathname.startsWith('/painting-services') || pathname.startsWith('/civil-work/')
+                    ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
+                    : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
+                }`}
+              >
+                Locations
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${locationsDropdownOpen ? 'rotate-180 text-gold-primary' : ''}`} />
+              </Link>
+
+              {locationsDropdownOpen && (
+                <div className="absolute top-full left-0 w-72 pt-2 animate-fade-in z-50">
+                  <div className="bg-white border-2 border-gold-primary/30 shadow-2xl rounded-2xl p-3 space-y-1 relative">
+                    {locationSubItems.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        className={`block px-3 py-2 text-xs font-semibold rounded-xl transition-colors ${
+                          sub.name.startsWith('•')
+                            ? 'text-slate-600 pl-5 hover:text-navy-dark hover:bg-slate-100'
+                            : 'text-navy-primary font-bold bg-slate-50 hover:bg-gold-primary/20 mt-1'
+                        }`}
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/projects"
+              className={`px-3 py-2 text-sm font-semibold rounded-full transition-all ${
+                pathname === '/projects'
+                  ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
+                  : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
+              }`}
+            >
+              Projects
+            </Link>
+
+            <Link
+              href="/resources"
+              className={`px-3 py-2 text-sm font-semibold rounded-full transition-all ${
+                pathname.startsWith('/resources')
+                  ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
+                  : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
+              }`}
+            >
+              Resources
+            </Link>
+
+            <Link
+              href="/contact"
+              className={`px-3 py-2 text-sm font-semibold rounded-full transition-all ${
+                pathname === '/contact'
+                  ? 'text-navy-primary bg-gold-primary/20 font-bold border-2 border-gold-primary'
+                  : 'text-slate-800 hover:text-gold-primary hover:bg-gold-light/40'
+              }`}
+            >
+              Contact
+            </Link>
           </div>
 
-          {/* Right Action Button - CURVY PILL BUTTON */}
+          {/* Right CTA Button */}
           <div className="hidden lg:flex items-center gap-3">
             <button
-              onClick={onOpenQuoteModal}
-              className="relative group px-6 py-2.5 bg-gold-primary text-navy-dark font-black text-sm rounded-full hover:bg-gold-bright transition-all shadow-md hover:shadow-gold-primary/40 flex items-center gap-2 overflow-hidden uppercase tracking-wider border-2 border-gold-bright"
+              onClick={handleQuoteClick}
+              className="relative group px-6 py-2.5 bg-gold-primary text-navy-dark font-black text-sm rounded-full hover:bg-gold-bright transition-all shadow-md flex items-center gap-2 uppercase tracking-wider border-2 border-gold-bright"
             >
               <span>Get a Quote</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -166,7 +253,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           {/* Mobile Hamburger Toggle */}
           <div className="lg:hidden flex items-center gap-3">
             <button
-              onClick={onOpenQuoteModal}
+              onClick={handleQuoteClick}
               className="px-3.5 py-1.5 bg-gold-primary text-navy-dark font-bold text-xs rounded-full hover:bg-gold-bright uppercase tracking-wider"
             >
               Quote
@@ -181,99 +268,51 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           </div>
         </div>
 
-        {/* Seamless Curvy Wave Bottom Edge for Navbar */}
-        <div className="absolute top-full left-0 right-0 w-full overflow-hidden leading-none z-40 pointer-events-none">
-          <svg
-            className="w-full block"
-            viewBox="0 0 1200 24"
-            preserveAspectRatio="none"
-            style={{ height: '18px' }}
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* White Fill matching Navbar background - exact curve boundary */}
-            <path
-              d="M 0 0 L 1200 0 L 1200 12 Q 1050 4, 900 12 Q 750 20, 600 12 Q 450 4, 300 12 Q 150 20, 0 12 Z"
-              fill="#FFFFFF"
-            />
-            {/* Golden Wavy Stroke Line - 100% exact match along curve */}
-            <path
-              d="M 0 12 Q 150 20, 300 12 Q 450 4, 600 12 Q 750 20, 900 12 Q 1050 4, 1200 12"
-              fill="none"
-              stroke="#D99A16"
-              strokeWidth="3"
-              vectorEffect="non-scaling-stroke"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
-
-        {/* Mobile Slide-out Drawer - Curvy Bottom */}
+        {/* Mobile Slide-out Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white text-slate-800 px-6 py-6 space-y-4 shadow-2xl animate-fade-in relative rounded-b-3xl border-b-2 border-gold-primary">
+          <div className="lg:hidden bg-white text-slate-800 px-6 py-6 space-y-4 shadow-2xl animate-fade-in relative rounded-b-3xl border-b-2 border-gold-primary max-h-[85vh] overflow-y-auto">
             <div className="flex flex-col space-y-2">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-base font-semibold">Home</Link>
+              <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-base font-semibold">About Us</Link>
+              <Link href="/services" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-base font-bold text-navy-primary bg-slate-100 rounded-lg">Services Overview</Link>
+              <div className="pl-4 space-y-1 text-xs text-slate-600 font-medium">
+                <Link href="/services/painting" onClick={() => setMobileMenuOpen(false)} className="block py-1">Painting Services</Link>
+                <Link href="/services/painting/residential-painting" onClick={() => setMobileMenuOpen(false)} className="block py-1 pl-2">• Residential Painting</Link>
+                <Link href="/services/painting/commercial-painting" onClick={() => setMobileMenuOpen(false)} className="block py-1 pl-2">• Commercial Painting</Link>
+                <Link href="/services/civil-work" onClick={() => setMobileMenuOpen(false)} className="block py-1">Civil Work</Link>
+                <Link href="/services/civil-work/residential-civil-work" onClick={() => setMobileMenuOpen(false)} className="block py-1 pl-2">• Residential Civil Work</Link>
+                <Link href="/services/civil-work/repair-work" onClick={() => setMobileMenuOpen(false)} className="block py-1 pl-2">• Civil Repair Work</Link>
+              </div>
 
-                if (link.hasDropdown) {
-                  return (
-                    <div key={link.name} className="space-y-1">
-                      <span className="block px-3 py-2 text-xs font-bold text-gold-primary uppercase tracking-wider border-l-2 border-gold-primary pl-2 rounded-r-lg">
-                        {link.name}
-                      </span>
-                      <div className="pl-4 space-y-1 border-l border-gold-primary/30">
-                        {link.subItems?.map((sub) => (
-                          <Link
-                            key={sub.href}
-                            href={sub.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="block px-3 py-2 text-sm font-medium text-slate-700 hover:text-gold-primary rounded-xl"
-                          >
-                            {sub.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                }
+              <Link href="/location" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-base font-bold text-navy-primary bg-slate-100 rounded-lg mt-2">Locations</Link>
+              <div className="pl-4 space-y-1 text-xs text-slate-600 font-medium">
+                <Link href="/location/noida" onClick={() => setMobileMenuOpen(false)} className="block py-1">Noida Overview</Link>
+                <Link href="/painting-services/noida" onClick={() => setMobileMenuOpen(false)} className="block py-1 pl-2">• Painting Services Noida</Link>
+                <Link href="/civil-work/noida" onClick={() => setMobileMenuOpen(false)} className="block py-1 pl-2">• Civil Work Noida</Link>
+                <Link href="/location/greater-noida" onClick={() => setMobileMenuOpen(false)} className="block py-1">Greater Noida Overview</Link>
+                <Link href="/painting-services/greater-noida" onClick={() => setMobileMenuOpen(false)} className="block py-1 pl-2">• Painting Services Greater Noida</Link>
+                <Link href="/civil-work/greater-noida" onClick={() => setMobileMenuOpen(false)} className="block py-1 pl-2">• Civil Work Greater Noida</Link>
+              </div>
 
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`block px-3 py-2.5 text-base font-semibold rounded-xl ${
-                      isActive ? 'bg-gold-primary/20 text-gold-primary font-bold border-l-4 border-gold-primary' : 'text-slate-800 hover:text-gold-primary'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                );
-              })}
+              <Link href="/projects" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-base font-semibold">Projects</Link>
+              <Link href="/resources" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-base font-semibold">Resources & Guides</Link>
+              <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="px-3 py-2 text-base font-semibold">Contact</Link>
             </div>
 
             <div className="pt-4 space-y-3">
-              <CurvyLine variant="slate" strokeWidth={1.5} height={8} className="w-full mb-3" />
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  onOpenQuoteModal();
+                  handleQuoteClick();
                 }}
                 className="w-full py-3 bg-gold-primary text-navy-dark font-extrabold rounded-full text-center shadow-lg uppercase text-sm tracking-wider"
               >
                 Get a Free Quote
               </button>
-              <a
-                href={`tel:${COMPANY_INFO.phone}`}
-                className="block text-center py-2 text-xs font-bold text-slate-600 hover:text-navy-dark"
-              >
-                📞 Call Directly: {COMPANY_INFO.phone}
-              </a>
             </div>
-            <CurvyLine variant="gold" strokeWidth={3} height={10} className="absolute bottom-0 left-0 right-0 w-full pointer-events-none" />
           </div>
         )}
       </nav>
     </header>
   );
 };
-

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 export interface CurvyLineProps {
@@ -119,7 +121,6 @@ export const CurvyLine: React.FC<CurvyLineProps> = ({
     );
   }
 
-  // Default 'wave' pattern
   return (
     <div className={`w-full overflow-hidden leading-none ${className}`} style={{ height: heightPx, ...style }}>
       <svg
@@ -164,18 +165,14 @@ export const CurvyDivider: React.FC<CurvyDividerProps> = ({
 };
 
 export interface WavyTransitionProps {
-  topColor: string; // Tailwind class or hex color (e.g., 'fill-white', 'fill-slate-50', 'fill-navy-primary', 'fill-navy-dark')
-  bottomColor: string; // Tailwind class or hex color
+  topColor: string;
+  bottomColor: string;
   strokeColor?: string;
   height?: number;
   position?: 'top' | 'bottom';
   className?: string;
 }
 
-/**
- * WavyTransition renders a filled SVG shape between two section background colors,
- * ensuring the color boundary itself is organic & wavy with zero straight horizontal cuts.
- */
 export const WavyTransition: React.FC<WavyTransitionProps> = ({
   topColor = '#FFFFFF',
   bottomColor = '#F8FAFC',
@@ -193,17 +190,14 @@ export const WavyTransition: React.FC<WavyTransitionProps> = ({
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Top Section Fill (from top down to wave curve) */}
         <path
           d="M 0 0 L 1200 0 L 1200 20 Q 1050 8, 900 20 Q 750 32, 600 20 Q 450 8, 300 20 Q 150 32, 0 20 Z"
           fill={topColor}
         />
-        {/* Bottom Section Fill (from bottom up to wave curve) */}
         <path
           d="M 0 40 L 1200 40 L 1200 20 Q 1050 8, 900 20 Q 750 32, 600 20 Q 450 8, 300 20 Q 150 32, 0 20 Z"
           fill={bottomColor}
         />
-        {/* Organic Wave Stroke Line */}
         {strokeColor && (
           <path
             d="M 0 20 Q 150 32, 300 20 Q 450 8, 600 20 Q 750 32, 900 20 Q 1050 8, 1200 20"

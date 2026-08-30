@@ -1,18 +1,26 @@
+'use client';
+
 import React from 'react';
 import { PhoneCall, Phone, ArrowRight, Building2, MapPin } from 'lucide-react';
 import { COMPANY_INFO } from '@/lib/data';
 import { WavyBackground } from './WavyBackground';
 
 interface CTASectionProps {
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal?: () => void;
 }
 
 export const CTASection: React.FC<CTASectionProps> = ({ onOpenQuoteModal }) => {
+  const handleQuoteClick = () => {
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal();
+    } else {
+      window.location.href = '/contact';
+    }
+  };
+
   return (
     <section className="py-16 bg-white text-slate-800 relative overflow-hidden border-b border-slate-200">
-      {/* Gold Decorative Wave */}
       <WavyBackground variant="light" />
-      {/* Gold Decorative Gradients */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-gold-primary/20 blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-navy-light/50 blur-3xl pointer-events-none"></div>
 
@@ -22,7 +30,6 @@ export const CTASection: React.FC<CTASectionProps> = ({ onOpenQuoteModal }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-8 space-y-4">
-
               <h2 className="text-3xl sm:text-5xl font-black text-navy-primary leading-tight">
                 Have a Project in Mind? <br />
                 <span className="text-gold-primary">Let's Build Something Great Together.</span>
@@ -34,16 +41,16 @@ export const CTASection: React.FC<CTASectionProps> = ({ onOpenQuoteModal }) => {
 
               <div className="flex flex-wrap items-center gap-4 pt-2 text-xs sm:text-sm text-slate-500">
                 <span className="flex items-center gap-1.5 text-navy-primary font-bold">
-                  <MapPin className="w-4 h-4 text-gold-primary" /> Serving Clients PAN India
+                  <MapPin className="w-4 h-4 text-gold-primary" /> Serving Noida, Greater Noida & Delhi NCR
                 </span>
                 <span>•</span>
-                <span className="text-navy-primary font-bold">PAN India Mobilization</span>
+                <span className="text-navy-primary font-bold">Direct Field Execution</span>
               </div>
             </div>
 
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col items-stretch gap-3">
               <button
-                onClick={onOpenQuoteModal}
+                onClick={handleQuoteClick}
                 className="w-full px-6 py-4 bg-gold-primary text-navy-dark font-black text-sm rounded-full hover:bg-gold-bright transition-all shadow-xl hover:shadow-gold-primary/30 flex items-center justify-center gap-2 uppercase tracking-wider group border-2 border-gold-bright"
               >
                 <span>Request Free Quote</span>

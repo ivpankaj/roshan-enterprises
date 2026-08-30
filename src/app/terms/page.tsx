@@ -1,45 +1,14 @@
-'use client';
+import type { Metadata } from 'next';
+import { generateMetadataHelper } from '@/lib/seo';
+import { TermsClient } from './TermsClient';
 
-import React, { useState } from 'react';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
-import { QuickQuoteModal } from '@/components/QuickQuoteModal';
+export const metadata: Metadata = generateMetadataHelper({
+  title: 'Terms & Conditions | Roshan Enterprises',
+  description:
+    'Terms & Conditions governing contracting services provided by Roshan Enterprises in Noida, Greater Noida, and Delhi NCR.',
+  path: '/terms',
+});
 
 export default function TermsPage() {
-  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
-
-  return (
-    <div className="min-h-screen bg-bg-light text-text-dark flex flex-col">
-      <Navbar onOpenQuoteModal={() => setQuoteModalOpen(true)} />
-
-      <main className="flex-1 pt-28 py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-8 bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-xl space-y-6">
-          <span className="text-gold-primary text-xs font-bold uppercase tracking-wider">Legal Document</span>
-          <h1 className="text-3xl sm:text-4xl font-black text-navy-primary">Terms & Conditions</h1>
-          <p className="text-xs text-slate-400">Effective Date: January 1, 2026</p>
-
-          <div className="space-y-4 text-sm text-slate-600 leading-relaxed">
-            <p>
-              Welcome to the official web portal of <strong>Roshan Enterprises</strong>. By accessing or engaging our contracting services (Painting, VDF/Epoxy Flooring, Civil Works), you agree to comply with these terms.
-            </p>
-            <h3 className="text-lg font-bold text-navy-primary pt-2">1. Scope of Work & Quotations</h3>
-            <p>
-              All technical estimations, material specifications, and project timelines are subject to formal site verification. Official contracts will detail exact line-item BOQs, payment milestones, and warranty conditions.
-            </p>
-            <h3 className="text-lg font-bold text-navy-primary pt-2">2. Warranties & Quality Assurance</h3>
-            <p>
-              Our painting, flooring, and civil execution warranties are backed by certified manufacturer materials (Asian Paints, Berger, UltraTech, Fosroc) and subject to site conditions outlined in final project agreements.
-            </p>
-            <h3 className="text-lg font-bold text-navy-primary pt-2">3. Jurisdiction</h3>
-            <p>
-              These terms are governed by the laws of India. Any disputes arising shall be subject to the exclusive jurisdiction of the courts in Gautam Buddha Nagar / Greater Noida, Uttar Pradesh.
-            </p>
-          </div>
-        </div>
-      </main>
-
-      <Footer onOpenQuoteModal={() => setQuoteModalOpen(true)} />
-      <QuickQuoteModal isOpen={quoteModalOpen} onClose={() => setQuoteModalOpen(false)} />
-    </div>
-  );
+  return <TermsClient />;
 }

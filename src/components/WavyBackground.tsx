@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 interface WavyBackgroundProps {
@@ -37,13 +39,11 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
           </linearGradient>
         </defs>
 
-        {/* Filled Wave Backdrop */}
         <path
           d="M0,100 C360,240 720,30 1080,200 C1260,280 1440,120 1440,120 L1440,500 L0,500 Z"
           fill={`url(#wavy-fill-${variant})`}
         />
 
-        {/* Primary Golden Wave Curve */}
         <path
           d="M0,100 C360,240 720,30 1080,200 C1260,280 1440,120 1440,120"
           stroke={`url(#wavy-gold-1-${variant})`}
@@ -51,7 +51,6 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
           fill="none"
         />
 
-        {/* Secondary Intersecting Wave Curve */}
         <path
           d="M0,260 C400,80 800,320 1200,90 C1320,30 1440,180 1440,180"
           stroke={`url(#wavy-gold-2-${variant})`}
@@ -61,7 +60,6 @@ export const WavyBackground: React.FC<WavyBackgroundProps> = ({
         />
       </svg>
 
-      {/* Ambient Golden Glow Orb */}
       <div className={`absolute bottom-0 right-1/4 w-96 h-96 blur-3xl rounded-full ${
         isDark ? 'bg-gold-primary/20' : 'bg-gold-primary/10'
       }`}></div>

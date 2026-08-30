@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 
@@ -16,7 +18,7 @@ export const Logo: React.FC<LogoProps> = ({
 
   return (
     <Link href="/" className={`inline-flex items-center gap-3 group focus:outline-none ${className}`}>
-      {/* Visual Icon Mark (New RE Logo) */}
+      {/* Visual Icon Mark */}
       <div className="relative w-12 h-12 flex-shrink-0 flex items-center justify-center bg-white border border-gold-primary p-0.5 shadow-md group-hover:border-gold-bright transition-colors rounded-full overflow-hidden">
         <img
           src="/logo.png"

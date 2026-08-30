@@ -1,77 +1,47 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { CLIENTS_LIST } from '@/lib/clientData';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
-import { WavyBackground } from './WavyBackground';
+import { CLIENT_REFERENCES } from '@/lib/data';
 import { CurvyLine } from './CurvyLine';
+import { Building2, ArrowRight } from 'lucide-react';
 
 export const ClientShowcase: React.FC = () => {
   return (
-    <section className="py-16 bg-slate-50/70 relative overflow-hidden">
-      {/* Golden Wavy Background behind cards */}
-      <WavyBackground variant="gold-subtle" />
-
+    <section className="py-14 bg-slate-50 relative overflow-hidden border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
-        
-        {/* Header */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10">
-          <div>
-            <div className="flex items-center gap-2 text-gold-primary text-xs font-bold uppercase tracking-widest">
-              <CheckCircle2 className="w-4 h-4" /> Trusted Industrial & Commercial Alliances
-            </div>
-            <h3 className="text-2xl sm:text-4xl font-black text-navy-primary mt-1">
-              A Business Trusted by Leading Businesses
-            </h3>
+        <div className="text-center max-w-2xl mx-auto mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold-primary/10 text-navy-primary border border-gold-primary/30 rounded-full text-xs font-extrabold uppercase tracking-wider mb-2">
+            <Building2 className="w-3.5 h-3.5 text-gold-primary" /> Corporate Trust & Reputation
           </div>
-          <p className="text-slate-600 text-sm max-w-md">
-            Click on any corporate partner to inspect real plant video walkthroughs, client reviews, and contract scope delivered by Roshan Enterprises.
-          </p>
+          <h2 className="text-2xl sm:text-3xl font-black text-navy-primary">
+            Trusted by Leading Corporate & Industrial Brands
+          </h2>
         </div>
 
-        {/* Corporate Client Cards with Real Vector Logos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {CLIENTS_LIST.map((client) => (
-            <Link
-              key={client.slug}
-              href={`/clients/${client.slug}`}
-              className="group bg-slate-50 border-2 border-slate-200 hover:border-gold-primary p-6 transition-all duration-300 shadow-md hover:shadow-2xl flex flex-col justify-between rounded-2xl relative overflow-hidden"
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          {CLIENT_REFERENCES.map((ref, idx) => (
+            <div
+              key={idx}
+              className="p-4 bg-white border border-slate-200 rounded-2xl flex flex-col items-center justify-center text-center space-y-1 hover:border-gold-primary transition-all shadow-sm"
             >
-              {/* Real Logo Image / SVG Render */}
-              <div className="flex flex-col items-center justify-center min-h-[72px]">
-                {client.logoImg ? (
-                  <img
-                    src={client.logoImg}
-                    alt={client.name}
-                    className="h-16 w-auto object-contain max-w-[180px] transition-transform group-hover:scale-105"
-                  />
-                ) : (
-                  <div
-                    className="w-full h-16 flex items-center justify-center transition-transform group-hover:scale-105"
-                    dangerouslySetInnerHTML={{ __html: client.logoSvg }}
-                  />
-                )}
-                <CurvyLine variant="slate" strokeWidth={1} height={6} className="w-full mt-3 mb-1" />
-              </div>
-
-              {/* Scope Teaser & Action */}
-              <div className="mt-2 pt-2 space-y-2">
-                <h4 className="font-extrabold text-navy-primary text-base group-hover:text-gold-primary transition-colors">
-                  {client.name}
-                </h4>
-
-                <div className="pt-2 flex items-center justify-between text-xs font-black text-navy-primary group-hover:text-gold-primary uppercase tracking-wider">
-                  <span>Explore Case Study & Video</span>
-                  <ArrowRight className="w-4 h-4 text-gold-primary group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </Link>
+              <h3 className="font-extrabold text-navy-primary text-xs sm:text-sm">{ref.name}</h3>
+              <span className="text-[10px] text-slate-500 font-semibold">{ref.category}</span>
+              <span className="text-[9px] text-gold-primary font-bold">{ref.location}</span>
+            </div>
           ))}
         </div>
 
+        <div className="mt-8 text-center">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-xs font-extrabold text-navy-primary hover:text-gold-primary uppercase tracking-wider transition-colors"
+          >
+            <span>View Verified Client Case Studies & Project Details</span>
+            <ArrowRight className="w-4 h-4 text-gold-primary" />
+          </Link>
+        </div>
       </div>
-
-      {/* Bottom Curvy Border */}
-      <CurvyLine variant="slate" strokeWidth={2} height={12} className="absolute bottom-0 left-0 right-0 w-full z-20 pointer-events-none" />
     </section>
   );
 };

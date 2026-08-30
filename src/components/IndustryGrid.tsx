@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Factory, Building, Home, GraduationCap, Hospital, ArrowUpRight } from 'lucide-react';
@@ -49,13 +51,11 @@ export const IndustryGrid: React.FC = () => {
             </linearGradient>
           </defs>
 
-          {/* Golden Wave Filled Backdrop */}
           <path
             d="M0,150 C380,300 760,40 1140,280 C1300,380 1440,180 1440,180 L1440,500 L0,500 Z"
             fill="url(#ind-gold-wave-fill)"
           />
 
-          {/* Primary Golden Wave Curve */}
           <path
             d="M0,150 C380,300 760,40 1140,280 C1300,380 1440,180 1440,180"
             stroke="url(#ind-gold-wave-1)"
@@ -63,7 +63,6 @@ export const IndustryGrid: React.FC = () => {
             fill="none"
           />
 
-          {/* Secondary Intersecting Wave Curve */}
           <path
             d="M0,320 C400,100 800,420 1200,120 C1320,30 1440,220 1440,220"
             stroke="url(#ind-gold-wave-2)"
@@ -73,7 +72,6 @@ export const IndustryGrid: React.FC = () => {
           />
         </svg>
 
-        {/* Ambient Golden Glow Orbs */}
         <div className="absolute top-1/3 right-10 w-96 h-96 bg-gold-primary/10 blur-3xl rounded-full"></div>
         <div className="absolute bottom-10 left-10 w-80 h-80 bg-gold-bright/10 blur-3xl rounded-full"></div>
       </div>
@@ -81,7 +79,7 @@ export const IndustryGrid: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-14">
           <h2 className="text-3xl sm:text-5xl font-black text-navy-primary">
-            Serving Various Sectors Across PAN India
+            Serving Various Sectors Across Noida, Greater Noida & NCR
           </h2>
           <p className="text-slate-600 text-sm sm:text-base mt-3">
             Customized painting, VDF/epoxy flooring, and civil solutions engineered for specialized sector compliance.

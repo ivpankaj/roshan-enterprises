@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle, Paintbrush, Grid, Building2 } from 'lucide-react';
@@ -35,12 +37,10 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, onOpenQuoteMo
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/30 to-transparent"></div>
 
-        {/* Badge - Curvy */}
         <div className="absolute top-4 left-4 bg-navy-primary text-gold-bright border border-gold-primary/40 text-xs font-black uppercase tracking-wider px-3 py-1 shadow-md rounded-full">
           {service.badge}
         </div>
 
-        {/* Floating Icon - Curvy */}
         <div className="absolute -bottom-5 right-6 w-12 h-12 bg-gold-primary text-navy-dark flex items-center justify-center shadow-xl group-hover:bg-gold-bright transition-colors rounded-2xl border-2 border-navy-dark">
           <IconComponent className="w-6 h-6" />
         </div>
@@ -56,7 +56,6 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, onOpenQuoteMo
             {service.shortDesc}
           </p>
 
-          {/* Sub-services List */}
           <div className="space-y-2.5 pt-2">
             <CurvyLine variant="slate" strokeWidth={1} height={6} className="w-full mb-3" />
             <h4 className="text-xs font-extrabold uppercase tracking-widest text-navy-primary">
@@ -73,7 +72,6 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, onOpenQuoteMo
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="pt-2 flex flex-col space-y-3">
           <CurvyLine variant="slate" strokeWidth={1} height={6} className="w-full mb-1" />
           <div className="flex items-center justify-between gap-3">
